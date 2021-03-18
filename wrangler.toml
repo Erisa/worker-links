@@ -1,0 +1,11 @@
+name = "worker-links"
+type = "javascript"
+
+# Change these!!
+account_id = "ece1d09b06af2ced51407c97505ea0cc"
+zone_id = "e2eabc0f0319355c842fd443ad480ade"
+kv_namespaces = [  { binding = "kv", id = "1be44406edc142a084435e24dbf8ae1d", preview_id = "15cfb90ecd654b8f8a9ccd600832093f" }]
+
+# Remove or comment out the route line if using workers_dev
+workers_dev = false
+route = "erisa.link/*"
