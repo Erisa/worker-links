@@ -8,7 +8,7 @@ It was made for my personal use but is available publicly in the hopes that it m
 
 ## Usage
 
-To deploy to your Cloudflare Workers account, edit the relevant entries in `wrangler.toml`, add a secret with `wrangler put WORKERLINKS_SECRET` and use `wrangler publish`.  
+To deploy to your Cloudflare Workers account, edit the relevant entries in `wrangler.toml`, add a secret with `wrangler secret put WORKERLINKS_SECRET` and use `wrangler publish`.  
 For debugging, you can use `wrangler preview`, though note you will need to login and configure a preview KV namespace in `wrangler.toml`.
 
 Once deployed, interacting with the API should be rather simple. It's based on headers, specifically with the `Authorization` and `URL` headers.
