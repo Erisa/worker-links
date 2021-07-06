@@ -66,9 +66,6 @@ It is a planned feature to be able to list all URLs via a `GET` on `/` with `Aut
 For the time being you can view them from your Cloudflare Dashboard:  
 Cloudflare Dashboard -> Workers -> KV -> View on the namespace.
 
-Or with the `wrangler` tool.  
-For example if you are in the project directory and have your `wrangler.toml` configured correctly, this should just be `wrangler kv:key list --binding kv`
-
 ## Security
 
 This code is relatively simple but still, if you find any security issues that can be exploited publicly, please reach out to me via email: `seriel (at) erisa.moe` with any relevant details.
