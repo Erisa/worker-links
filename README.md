@@ -6,11 +6,17 @@ I run this code in production on [erisa.link](https://erisa.link/example), thoug
 
 It was made for my personal use but is available publicly in the hopes that it may be useful to someone somewhere.
 
-## Usage
+## Deploy
 
 To deploy to your Cloudflare Workers account, edit the relevant entries in `wrangler.toml`, add a secret with `wrangler secret put WORKERLINKS_SECRET` and use `wrangler publish`.  
-For debugging, you can use `wrangler preview`, though note you will need to login and configure a preview KV namespace in `wrangler.toml`.
+For debugging, you either can use `wrangler preview`, though note you will need to login and configure a preview KV namespace in `wrangler.toml` - or use Miniflare (See below).
 
+## Running locally
+If you want to run this locally (Not on Cloudflare), you can use [miniflare](https://github.com/mrbbot/miniflare):
+- `npm install` or `npm install -g miniflare`
+- `miniflare index.js -k kv -b WORKERLINKS_SECRET=putyoursecrethere`
+
+## Usage
 Once deployed, interacting with the API should be rather simple. It's based on headers, specifically with the `Authorization` and `URL` headers.
 
 To create a short URL with a random URL, send a `POST` to `/` with `Authorization` and `URL` headers:
