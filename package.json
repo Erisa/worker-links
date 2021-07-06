@@ -6,7 +6,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write '**/*.{js,css,json,md}'"
+    "format": "prettier --write '**/*.{js,css,json,md}'",
+    "deploy": "wrangler publish",
+    "debug": "miniflare --debug index.js -k kv -b WORKERLINKS_SECRET=putyoursecrethere",
+    "local": "miniflare index.js -k kv -b WORKERLINKS_SECRET=$WORKERLINKS_SECRET"
   },
   "author": "Erisa A",
   "license": "MIT",
