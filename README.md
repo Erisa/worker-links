@@ -34,12 +34,12 @@ Once deployed, interacting with the API should be rather simple. It's based on h
 To create a short URL with a random URL, send a `POST` to `/` with `Authorization` and `URL` headers:
 
 ```json
-erisa@Tuturu:~$ curl -X POST -H "Authorization: mysecret" -H "URL: https://erisa.moe" https://erisa.link/
+erisa@Tuturu:~$ curl -X POST -H "Authorization: mysecret" -H "URL: https://erisa.uk" https://erisa.link/
 {
   "message": "URL created succesfully.",
   "key": "q2w083eq",
   "shorturl": "https://erisa.link/q2w083eq",
-  "longurl": "https://erisa.moe"
+  "longurl": "https://erisa.uk"
 }
 ```
 
@@ -50,7 +50,7 @@ erisa@Tuturu:~$ curl https://erisa.link/q2w083eq -D-
 HTTP/2 302
 date: Fri, 11 Sep 2020 12:43:04 GMT
 content-length: 0
-location: https://erisa.moe
+location: https://erisa.uk
 server: cloudflare
 ..other ephemeral headers..
 ```
@@ -58,12 +58,12 @@ server: cloudflare
 To create or update a custom short URl, send a `PUT` to the intended target URL:
 
 ```json
-erisa@Tuturu:~$ curl -X PUT -H "Authorization: mysecret" -H "URL: https://erisa.moe" https://erisa.link/mywebsite
+erisa@Tuturu:~$ curl -X PUT -H "Authorization: mysecret" -H "URL: https://erisa.uk" https://erisa.link/mywebsite
 {
   "message": "URL created succesfully.",
   "key": "mywebsite",
   "shorturl": "https://erisa.link/mywebsite",
-  "longurl": "https://erisa.moe"
+  "longurl": "https://erisa.uk"
 }
 ```
 
@@ -75,7 +75,7 @@ erisa@Tuturu:~$ curl -X DELETE -H "Authorization: mysecret" https://erisa.link/k
   "message": "Short URL deleted succesfully.",
   "key": "keytodelete",
   "shorturl": "https://erisa.link/keytodelete",
-  "longurl": "https://erisa.moe"
+  "longurl": "https://erisa.uk"
 }
 ```
 
@@ -86,7 +86,7 @@ Cloudflare Dashboard -> Workers -> KV -> View on the namespace.
 
 ## Security
 
-This code is relatively simple but still, if you find any security issues that can be exploited publicly, please reach out to me via email: `seriel (at) erisa.moe` with any relevant details.
+This code is relatively simple but still, if you find any security issues that can be exploited publicly, please reach out to me via email: `erisa (at) erisa.uk` with any relevant details.
 
 If you don't have access to Workers KV you're welcome to test these issues on my live `erisa.link`, provided you don't send excessive (constant) requests or delete/modify any keys except ones created by you or the `/sample` key.
 
