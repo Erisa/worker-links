@@ -1,7 +1,7 @@
 FROM node:14-alpine
 
 WORKDIR /app
-COPY package*.json .
+COPY package*.json ./
 
 ENV NODE_ENV=production
 ENV WORKERLINKS_SECRET=default
