@@ -13,7 +13,7 @@ For debugging, you either can use `wrangler preview`, though note you will need 
 
 ## Running locally
 
-If you want to run this locally (Not on Cloudflare), you can use [miniflare](https://github.com/mrbbot/miniflare):
+If you want to run this locally (Not on Cloudflare), you can use [miniflare](https://github.com/cloudflare/miniflare):
 
 - `npm install -g miniflare`
 - `miniflare index.js -k kv -b WORKERLINKS_SECRET=putyoursecrethere`
