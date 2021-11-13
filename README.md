@@ -20,7 +20,7 @@ If you want to run this locally (Not on Cloudflare), you can use [miniflare](htt
 
 or
 
-- `WORKERLINKS_SECRET=putyoursecrethere npm run local`
+- `WORKERLINKS_SECRET=putyoursecrethere yarn run local`
 
 or
 
