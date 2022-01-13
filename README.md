@@ -22,11 +22,6 @@ or
 
 - `WORKERLINKS_SECRET=putyoursecrethere yarn run local`
 
-or
-
-- `docker run -e WORKERLINKS_SECREET=putyoursecrethere -p 8787:8787 ghcr.io/erisa/worker-links`
-
-
 ## Usage
 
 Once deployed, interacting with the API should be rather simple. It's based on headers, specifically with the `Authorization` and `URL` headers.
