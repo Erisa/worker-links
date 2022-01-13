@@ -114,7 +114,7 @@ async function handleRequest(request) {
         },
       )
     } else {
-      kv.delete(key)
+      await kv.delete(key)
       return new Response(
         JSON.stringify(
           {
