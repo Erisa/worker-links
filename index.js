@@ -1,6 +1,6 @@
 let secret
 
-addEventListener('fetch', event => {
+addEventListener('fetch', (event) => {
   event.respondWith(handleRequest(event.request))
 })
 
@@ -10,8 +10,8 @@ addEventListener('fetch', event => {
  */
 async function handleRequest(request) {
   // Set this in your worker's environment. wrangler.toml or cloudflare dashboard
-  if (WORKERLINKS_SECRET === undefined ) {
-    return new Response("Secret is not defined. Please add WORKERLINKS_SECRET.")
+  if (WORKERLINKS_SECRET === undefined) {
+    return new Response('Secret is not defined. Please add WORKERLINKS_SECRET.')
   } else {
     secret = WORKERLINKS_SECRET
   }
@@ -40,11 +40,7 @@ async function handleRequest(request) {
         },
       )
     }
-    key =
-      '/' +
-      Math.random()
-        .toString(36)
-        .slice(5)
+    key = '/' + Math.random().toString(36).slice(5)
     shorturl = new URL(request.url).origin + key
     return await putLink(
       request.headers.get('Authorization'),
