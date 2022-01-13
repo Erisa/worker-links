@@ -13,11 +13,9 @@
   },
   "author": "Erisa A",
   "license": "MIT",
-  "dependencies": {
-    "miniflare": "^1.4.1"
-  },
   "devDependencies": {
-    "@cloudflare/wrangler": "^1.19.3",
-    "prettier": "^2.4.0"
+    "miniflare": "^2.0.0",
+    "@cloudflare/wrangler": "^1.19.7",
+    "prettier": "^2.5.1"
   }
 }
