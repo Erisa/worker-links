@@ -7,7 +7,7 @@ zone_id = "f0af03c025f4c50c50e71ed4e08dd754"
 kv_namespaces = [  { binding = "kv", id = "1be44406edc142a084435e24dbf8ae1d", preview_id = "15cfb90ecd654b8f8a9ccd600832093f" }]
 
 compatibility_flags = []
-compatibility_date = "2021-11-13"
+compatibility_date = "2022-06-06"
 
 # Remove or comment out the route line if using workers_dev
 workers_dev = false

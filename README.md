@@ -8,6 +8,9 @@ It was made for my personal use but is available publicly in the hopes that it m
 
 ## Deploy
 
+For the time being, Wrangler 1 is required: `npm i -g @cloudflare/wrangler`  
+This will change in future.
+
 To deploy to your Cloudflare Workers account, edit the relevant entries in `wrangler.toml`, add a secret with `wrangler secret put WORKERLINKS_SECRET` and use `wrangler publish`.  
 For debugging, you either can use `wrangler preview`, though note you will need to login and configure a preview KV namespace in `wrangler.toml` - or use Miniflare (See below).
 
