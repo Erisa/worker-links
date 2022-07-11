@@ -5,17 +5,16 @@
   "description": "Simple link shortener for Cloudflare Workers.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write '**/*.{js,css,json,md}'",
     "deploy": "wrangler publish",
-    "debug": "miniflare --debug index.js -k kv -b WORKERLINKS_SECRET=putyoursecrethere",
-    "local": "miniflare index.js -k kv -b WORKERLINKS_SECRET=$WORKERLINKS_SECRET"
+    "dev": "wrangler dev --local",
+    "addsecret": "wrangler secret put WORKERLINKS_SECRET"
   },
   "author": "Erisa A",
   "license": "MIT",
   "devDependencies": {
-    "@cloudflare/wrangler": "^1.19.12",
-    "miniflare": "^2.5.0",
-    "prettier": "^2.6.1"
+    "miniflare": "^2.6.0",
+    "prettier": "^2.6.1",
+    "wrangler": "^2.0.17"
   }
 }

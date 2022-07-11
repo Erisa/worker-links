@@ -6,24 +6,25 @@ I run this code in production on [erisa.link](https://erisa.link/example), thoug
 
 It was made for my personal use but is available publicly in the hopes that it may be useful to someone somewhere.
 
-## Deploy
+## Deploy (simple)
 
-For the time being, Wrangler 1 is required: `npm i -g @cloudflare/wrangler`  
-This will change in future.
+Wrangler 2 is required now, but should be handled automatically for `yarn` commands.  
+To run manual wrangler commands, try `npx wrangler`.
+
+Simple steps:
+- `yarn install`
+- `yarn addsecret`
+- `yarn deploy`
+
+## Deploy (More involved)
 
 To deploy to your Cloudflare Workers account, edit the relevant entries in `wrangler.toml`, add a secret with `wrangler secret put WORKERLINKS_SECRET` and use `wrangler publish`.  
-For debugging, you either can use `wrangler preview`, though note you will need to login and configure a preview KV namespace in `wrangler.toml` - or use Miniflare (See below).
 
-## Running locally
+## Debugging
 
-If you want to run this locally (Not on Cloudflare), you can use [miniflare](https://github.com/cloudflare/miniflare):
+For debuggging, you can use `yarn dev` (Which runs `wrangler dev --local`). To change the secret used in this mode, edit the `.dev.vars` file.
 
-- `npm install -g miniflare`
-- `miniflare index.js -k kv -b WORKERLINKS_SECRET=putyoursecrethere`
-
-or
-
-- `WORKERLINKS_SECRET=putyoursecrethere yarn run local`
+You can also debug on the edge with `wrangler dev`, though you will need to first configure a prepview namespace in `wrangler.toml` and add the `WORKERLINKS_SECRET` secret to the Worker.
 
 ## Usage
 
