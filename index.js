@@ -1,14 +1,15 @@
 let secret
 
 addEventListener('fetch', (event) => {
-  event.respondWith(handleRequest(event.request))
+  event.respondWith(handleRequest(event))
 })
 
 /**
  * Respond to the request
- * @param {Request} request
+ * @param {Event} event
  */
-async function handleRequest(request) {
+async function handleRequest(event) {
+  const { request } = event
   // Set this in your worker's environment. wrangler.toml or cloudflare dashboard
   if (WORKERLINKS_SECRET === undefined) {
     return new Response('Secret is not defined. Please add WORKERLINKS_SECRET.')
@@ -76,11 +77,9 @@ async function handleRequest(request) {
           url: request.url,
           domain: new URL(request.url).hostname,
         }
-        await fetch(url, {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify(data),
-        }).catch(console.error)
+        event.waitUntil(
+          fetch(url, { method: 'POST', headers, body: JSON.stringify(data) }),
+        )
       }
       return new Response(null, { status: 302, headers: { Location: url } })
     }
