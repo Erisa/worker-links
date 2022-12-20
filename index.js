@@ -1,14 +1,15 @@
 let secret
 
 addEventListener('fetch', (event) => {
-  event.respondWith(handleRequest(event.request))
+  event.respondWith(handleRequest(event))
 })
 
 /**
  * Respond to the request
- * @param {Request} request
+ * @param {Event} event
  */
-async function handleRequest(request) {
+async function handleRequest(event) {
+  const { request } = event
   // Set this in your worker's environment. wrangler.toml or cloudflare dashboard
   if (WORKERLINKS_SECRET === undefined) {
     return new Response('Secret is not defined. Please add WORKERLINKS_SECRET.')
@@ -31,11 +32,11 @@ async function handleRequest(request) {
       return Response.json(
         {
           code: '405 Method Not Allowed',
-          message: 'POST not valid for individual keys. Did you mean PUT?'
+          message: 'POST not valid for individual keys. Did you mean PUT?',
         },
         {
-          status: 405
-        }
+          status: 405,
+        },
       )
     }
     key = '/' + Math.random().toString(36).slice(5)
@@ -52,13 +53,34 @@ async function handleRequest(request) {
       return Response.json(
         {
           code: '404 Not Found',
-          message: 'Key does not exist or has not propagated.'
+          message: 'Key does not exist or has not propagated.',
         },
         {
-          status: 404
-        }
+          status: 404,
+        },
       )
     } else {
+      // PLAUSIBLE_HOST should be the full URL to your Plausible Analytics instance
+      // e.g. https://plausible.io/
+      if (PLAUSIBLE_HOST !== undefined) {
+        const url = PLAUSIBLE_HOST + 'api/event'
+        const headers = new Headers()
+        headers.append('User-Agent', request.headers.get('User-Agent'))
+        headers.append(
+          'X-Forwarded-For',
+          request.headers.get('X-Forwarded-For'),
+        )
+        headers.append('Content-Type', 'application/json')
+
+        const data = {
+          name: 'pageview',
+          url: request.url,
+          domain: new URL(request.url).hostname,
+        }
+        event.waitUntil(
+          fetch(url, { method: 'POST', headers, body: JSON.stringify(data) }),
+        )
+      }
       return new Response(null, { status: 302, headers: { Location: url } })
     }
   } else if (request.method == 'DELETE') {
@@ -66,11 +88,11 @@ async function handleRequest(request) {
       return Response.json(
         {
           code: '401 Unauthorized',
-          message: 'Unauthorized.'
+          message: 'Unauthorized.',
         },
         {
-          status: 401
-        }
+          status: 401,
+        },
       )
     }
 
@@ -80,11 +102,11 @@ async function handleRequest(request) {
       return Response.json(
         {
           code: '404 Not Found',
-          message: 'Key does not exist or has not propagated.'
+          message: 'Key does not exist or has not propagated.',
         },
         {
           status: 404,
-        }
+        },
       )
     } else {
       await kv.delete(key)
@@ -93,11 +115,11 @@ async function handleRequest(request) {
           message: 'Short URL deleted succesfully.',
           key: key.substr(1),
           shorturl: shorturl,
-          longurl: url
+          longurl: url,
         },
         {
-          status: 200
-        }
+          status: 200,
+        },
       )
     }
   }
@@ -106,11 +128,11 @@ async function handleRequest(request) {
     {
       code: '405 Method Not Allowed',
       message:
-        'Unsupported method. Please use one of GET, PUT, POST, DELETE, HEAD.'
+        'Unsupported method. Please use one of GET, PUT, POST, DELETE, HEAD.',
     },
     {
-      status: 405
-    }
+      status: 405,
+    },
   )
 }
 
@@ -132,11 +154,11 @@ async function putLink(givenSecret, shorturl, key, url) {
     return Response.json(
       {
         code: '401 Unauthorized',
-        message: 'Unauthorized.'
+        message: 'Unauthorized.',
       },
       {
-        status: 401
-      }
+        status: 401,
+      },
     )
   }
 
@@ -144,11 +166,11 @@ async function putLink(givenSecret, shorturl, key, url) {
     return Response.json(
       {
         code: '400 Bad Request',
-        message: "No valid URL given. Please set a 'URL' header."
+        message: "No valid URL given. Please set a 'URL' header.",
       },
       {
-        status: 400
-      }
+        status: 400,
+      },
     )
   }
 
@@ -158,10 +180,10 @@ async function putLink(givenSecret, shorturl, key, url) {
       message: 'URL created succesfully.',
       key: key.substr(1),
       shorturl: shorturl,
-      longurl: url
+      longurl: url,
     },
     {
-      status: 200
-    }
+      status: 200,
+    },
   )
 }

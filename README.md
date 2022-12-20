@@ -12,13 +12,14 @@ Wrangler 2 is required now, but should be handled automatically for `yarn` comma
 To run manual wrangler commands, try `npx wrangler`.
 
 Simple steps:
+
 - `yarn install`
 - `yarn addsecret`
 - `yarn deploy`
 
 ## Deploy (More involved)
 
-To deploy to your Cloudflare Workers account, edit the relevant entries in `wrangler.toml`, add a secret with `wrangler secret put WORKERLINKS_SECRET` and use `wrangler publish`.  
+To deploy to your Cloudflare Workers account, edit the relevant entries in `wrangler.toml`, add a secret with `wrangler secret put WORKERLINKS_SECRET` and use `wrangler publish`.
 
 ## Debugging
 
@@ -83,6 +84,10 @@ It is a planned feature to be able to list all URLs via a `GET` on `/` with `Aut
 For the time being you can view them from your Cloudflare Dashboard:  
 Cloudflare Dashboard -> Workers -> KV -> View on the namespace.
 
+## Plausible Analytics
+
+To get statistics for your short URLs with Plausible Analytics, define a `PLAUSIBLE_HOST` secret set to the URL of your Plausible instance. For example, `https://plausible.io/`.
+ 
 ## Security
 
 This code is relatively simple but still, if you find any security issues that can be exploited publicly, please reach out to me via email: `erisa (at) erisa.uk` with any relevant details.
