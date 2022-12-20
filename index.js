@@ -59,8 +59,10 @@ async function handleRequest(request) {
         },
       )
     } else {
+      // PLAUSIBLE_HOST should be the full URL to your Plausible Analytics instance
+      // e.g. https://plausible.io/
       if (PLAUSIBLE_HOST !== undefined) {
-        const url = PLAUSIBLE_HOST + '/api/event'
+        const url = PLAUSIBLE_HOST + 'api/event'
         const headers = new Headers()
         headers.append('User-Agent', request.headers.get('User-Agent'))
         headers.append(
@@ -74,12 +76,11 @@ async function handleRequest(request) {
           url: request.url,
           domain: new URL(request.url).hostname,
         }
-
-        const response = await fetch(url, {
+        await fetch(url, {
           method: 'POST',
           headers: headers,
           body: JSON.stringify(data),
-        })
+        }).catch(console.error)
       }
       return new Response(null, { status: 302, headers: { Location: url } })
     }
