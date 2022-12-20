@@ -84,11 +84,10 @@ It is a planned feature to be able to list all URLs via a `GET` on `/` with `Aut
 For the time being you can view them from your Cloudflare Dashboard:  
 Cloudflare Dashboard -> Workers -> KV -> View on the namespace.
 
-## Plausible 
+## Plausible Analytics
 
 To get statistics for your short URLs with Plausible Analytics, define a `PLAUSIBLE_HOST` secret set to the URL of your Plausible instance. For example, `https://plausible.io/`.
  
-
 ## Security
 
 This code is relatively simple but still, if you find any security issues that can be exploited publicly, please reach out to me via email: `erisa (at) erisa.uk` with any relevant details.
