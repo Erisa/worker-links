@@ -86,7 +86,8 @@ Cloudflare Dashboard -> Workers -> KV -> View on the namespace.
 
 ## Plausible 
 
-To add Plausible analytics to your short URLs, create a `PLAUSIBLE_HOST` secret that points to your Plausible instance. 
+To get statistics for your short URLs with Plausible Analytics, define a `PLAUSIBLE_HOST` secret set to the URL of your Plausible instance. For example, `https://plausible.io/`.
+ 
 
 ## Security
 
