@@ -62,7 +62,7 @@ async function handleRequest(event) {
     } else {
       // PLAUSIBLE_HOST should be the full URL to your Plausible Analytics instance
       // e.g. https://plausible.io/
-      if (PLAUSIBLE_HOST !== undefined) {
+      if (typeof PLAUSIBLE_HOST !== 'undefined') {
         const url = PLAUSIBLE_HOST + 'api/event'
         const headers = new Headers()
         headers.append('User-Agent', request.headers.get('User-Agent'))
