@@ -2,8 +2,8 @@ name = "worker-links"
 main = "index.js"
 no_bundle = true
 
-# optional, disable if you dont need it
-logpush = true
+# optional
+#logpush = true
 
 # Change these!!
 account_id = "ece1d09b06af2ced51407c97505ea0cc"
