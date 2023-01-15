@@ -76,6 +76,7 @@ async function handleRequest(event) {
           name: 'pageview',
           url: request.url,
           domain: new URL(request.url).hostname,
+          referrer: request.referrer,
         }
         event.waitUntil(
           fetch(url, { method: 'POST', headers, body: JSON.stringify(data) }),
