@@ -17,8 +17,10 @@ async function handleRequest(event) {
     secret = WORKERLINKS_SECRET
   }
 
-  var key = new URL(request.url).pathname
-  var shorturl = new URL(request.url).origin + key
+  let path = new URL(request.url).pathname
+  // Trim trailing slash
+  let key = path !== '/' ? path.replace(/\/$/, '') : path;
+  let shorturl = new URL(request.url).origin + key
 
   if (request.method == 'PUT') {
     return await putLink(
