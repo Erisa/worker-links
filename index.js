@@ -53,6 +53,18 @@ async function handleRequest(event) {
         request.headers.get('URL'),
       )
     } else {
+      if (request.headers.get('Authorization') != secret) {
+        return Response.json(
+          {
+            code: '401 Unauthorized',
+            message: 'Unauthorized.',
+          },
+          {
+            status: 401,
+          },
+        )
+      }
+
       let json
       try {
         json = JSON.parse(body)
