@@ -19,8 +19,8 @@ async function handleRequest(event) {
 
   let path = new URL(request.url).pathname
   // Trim trailing slash
-  let key = path !== '/' ? path.replace(/\/$/, '') : path;
-  let shorturl = new URL(request.url).origin + key
+  let key = path !== '/' ? path.replace(/\/$/, '') : path
+  let shorturl = new URL(key, request.url).origin
 
   if (request.method == 'PUT') {
     return await putLink(
@@ -41,14 +41,65 @@ async function handleRequest(event) {
         },
       )
     }
-    key = '/' + Math.random().toString(36).slice(5)
-    shorturl = new URL(request.url).origin + key
-    return await putLink(
-      request.headers.get('Authorization'),
-      shorturl,
-      key,
-      request.headers.get('URL'),
-    )
+    const body = await request.text()
+
+    if (!body) {
+      key = '/' + Math.random().toString(36).slice(5)
+      shorturl = new URL(key, request.url)
+      return await putLink(
+        request.headers.get('Authorization'),
+        shorturl,
+        key,
+        request.headers.get('URL'),
+      )
+    } else {
+      let json
+      try {
+        json = JSON.parse(body)
+      } catch {
+        return Response.json(
+          {
+            code: '400 Bad Request',
+            message: 'Body must be valid JSON, or none at all.',
+          },
+          {
+            status: 400,
+          },
+        )
+      }
+
+      const valid = validateBulkBody(json)
+      if (!valid) {
+        return Response.json(
+          {
+            code: '400 Bad Request',
+            message:
+              'Body must be a standard JSON object mapping keys to urls.',
+            example: {
+              '/short': 'https://example.com/really-really-really-long-1',
+              '/other': 'https://subdomain.example.com/and-some-long-path',
+            },
+          },
+          { status: 400 },
+        )
+      }
+
+      for (const [key, url] of Object.entries(json)) {
+        await kv.put(key, url)
+      }
+
+      return Response.json(
+        {
+          message: 'URLs created successfully',
+          entries: Object.entries(json).map(([key, longurl]) => ({
+            key: key.slice(1),
+            shorturl: new URL(key, request.url),
+            longurl,
+          })),
+        },
+        { status: 200 },
+      )
+    }
   } else if (request.method == 'GET' || request.method == 'HEAD') {
     let url = await kv.get(key)
     if (url == null) {
@@ -99,7 +150,7 @@ async function handleRequest(event) {
       )
     }
 
-    shorturl = new URL(request.url).origin + key
+    shorturl = new URL(key, request.url)
     let url = await kv.get(key)
     if (url == null) {
       return Response.json(
@@ -116,7 +167,7 @@ async function handleRequest(event) {
       return Response.json(
         {
           message: 'Short URL deleted succesfully.',
-          key: key.substr(1),
+          key: key.slice(1),
           shorturl: shorturl,
           longurl: url,
         },
@@ -152,6 +203,17 @@ function validateUrl(url) {
   return true
 }
 
+// zod and other validation libs too
+function validateBulkBody(body) {
+  // Starting `/` and no ending `/`
+  const keyRe = /^\/.*?[^\/]$/
+
+  if (!body || typeof body !== 'object' || Array.isArray(body)) return false
+  return Object.entries(body).every(
+    ([key, url]) => keyRe.test(key) && validateUrl(url),
+  )
+}
+
 async function putLink(givenSecret, shorturl, key, url) {
   if (givenSecret != secret) {
     return Response.json(
@@ -181,7 +243,7 @@ async function putLink(givenSecret, shorturl, key, url) {
   return Response.json(
     {
       message: 'URL created succesfully.',
-      key: key.substr(1),
+      key: key.slice(1),
       shorturl: shorturl,
       longurl: url,
     },
