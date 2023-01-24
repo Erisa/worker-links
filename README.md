@@ -118,7 +118,3 @@ This code is relatively simple but still, if you find any security issues that c
 If you don't have access to Workers KV you're welcome to test these issues on my live `erisa.link`, provided you don't send excessive (constant) requests or delete/modify any keys except ones created by you or the `/sample` key.
 
 If I don't respond to your email for whatever reason please feel free to publicly open an issue.
-
-```
-
-```
