@@ -55,7 +55,7 @@ server: cloudflare
 ..other ephemeral headers..
 ```
 
-To create or update a custom short URl, send a `PUT` to the intended target URL:
+To create or update a custom short URL, send a `PUT` to the intended target URL:
 
 ```json
 erisa@Tuturu:~$ curl -X PUT -H "Authorization: mysecret" -H "URL: https://erisa.uk" https://erisa.link/mywebsite
@@ -79,15 +79,38 @@ erisa@Tuturu:~$ curl -X DELETE -H "Authorization: mysecret" https://erisa.link/k
 }
 ```
 
+You can also bulk create multiple shortlinks at once by sending a `POST` to `/` with no `URL` header and with a JSON body instead:
+
+```json
+erisa@Tuturu:~$ curl -X POST -H "Authorization: mysecret" https://erisa.link/ \
+    -H 'Content-Type: application/json' \
+    -d '{ "/short1": "https://example.com", "/mywebsite": "https://erisa.uk" }'
+{
+  "message": "URLs created successfully",
+  "entries": [
+    {
+      "key": "short1",
+      "shorturl": "https://erisa.link/short1",
+      "longurl": "https://example.com"
+    },
+    {
+      "key": "mywebsite",
+      "shorturl": "http://erisa.link/mywebsite",
+      "longurl": "https://erisa.uk"
+    }
+  ]
+}
+```
+
 It is a planned feature to be able to list all URLs via a `GET` on `/` with `Authorization`.
 
-For the time being you can view them from your Cloudflare Dashboard:  
+For the time being you can view them from your Cloudflare Dashboard:
 Cloudflare Dashboard -> Workers -> KV -> View on the namespace.
 
 ## Plausible Analytics
 
 To get statistics for your short URLs with Plausible Analytics, define a `PLAUSIBLE_HOST` secret set to the URL of your Plausible instance. For example, `https://plausible.io/`.
- 
+
 ## Security
 
 This code is relatively simple but still, if you find any security issues that can be exploited publicly, please reach out to me via email: `erisa (at) erisa.uk` with any relevant details.
