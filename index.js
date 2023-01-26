@@ -84,6 +84,13 @@ async function handleRequest(event) {
           fetch(url, { method: 'POST', headers, body: JSON.stringify(data) }),
         )
       }
+
+      const searchParams = new URL(request.url).searchParams
+      url = new URL(url)
+      searchParams.forEach((value, key) => {
+        url.searchParams.append(key, value)
+      })
+
       return new Response(null, { status: 302, headers: { Location: url } })
     }
   } else if (request.method == 'DELETE') {
