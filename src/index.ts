@@ -116,7 +116,7 @@ app.post('/', async (c) => {
 
 	if (!body) {
 		c.set('key', '/' + Math.random().toString(36).slice(5))
-		c.set('shortUrl', new URL(c.get('key'), c.req.url))
+		c.set('shortUrl', new URL(c.get('key'), c.req.url).toString())
 		return await createLink(c)
 	} else {
 		// bulk upload from body
