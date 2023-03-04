@@ -224,8 +224,6 @@ app.all('*', (c) =>
 	),
 )
 
-export default app
-
 // PLAUSIBLE_HOST should be the full URL to your Plausible Analytics instance
 // e.g. https://plausible.io/
 async function sendToPlausible(c: Context) {
@@ -268,3 +266,5 @@ function validateUrl(url: string) {
 //     ([key, url]) => keyRe.test(key) && validateUrl(url)
 //   );
 // }
+
+export default app
