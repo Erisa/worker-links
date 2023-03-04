@@ -1,19 +1,21 @@
 {
-  "private": true,
   "name": "worker-links",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Simple link shortener for Cloudflare Workers.",
-  "main": "index.js",
-  "scripts": {
-    "format": "prettier --write '**/*.{js,css,json,md}'",
-    "deploy": "wrangler publish",
-    "dev": "wrangler dev --local",
-    "addsecret": "wrangler secret put WORKERLINKS_SECRET"
-  },
   "author": "Erisa A",
   "license": "MIT",
+  "scripts": {
+    "format": "prettier --write '**/*.{ts,js,css,json,md}'",
+    "deploy": "wrangler publish",
+    "dev": "wrangler dev",
+    "addsecret": "wrangler secret put WORKERLINKS_SECRET"
+  },
+  "dependencies": {
+    "hono": "^3.0.2"
+  },
   "devDependencies": {
-    "prettier": "^2.6.1",
-    "wrangler": "^2.6.2"
+    "@cloudflare/workers-types": "^4.20221111.1",
+    "prettier": "^2.8.4",
+    "wrangler": "^2.12.0"
   }
 }
