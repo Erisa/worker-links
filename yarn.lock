@@ -744,6 +744,11 @@ signal-exit@^3.0.7:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
+simple-runtypes@^7.1.3:
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/simple-runtypes/-/simple-runtypes-7.1.3.tgz#0c9362016ae385995499e85c00dbd4fef3af9769"
+  integrity sha512-NDxAtKPHQplTyfdt2nAUuTV7RVwEBIRFZT7Z+g4eso5JGI5AwllpRcU9ibmxs+8vKKNrhebgK5zvCX3j8DoHhw==
+
 source-map-support@^0.5.20:
   version "0.5.21"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.21.tgz#04fe7c7f9e1ed2d662233c28cb2b35b9f63f6e4f"

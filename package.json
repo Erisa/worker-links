@@ -8,10 +8,12 @@
 		"format": "prettier --write '**/*.{ts,js,css,json,md}'",
 		"deploy": "wrangler publish",
 		"dev": "wrangler dev",
-		"addsecret": "wrangler secret put WORKERLINKS_SECRET"
+		"addsecret": "wrangler secret put WORKERLINKS_SECRET",
+		"build": "wrangler publish --dry-run --outdir=./dist"
 	},
 	"dependencies": {
-		"hono": "^3.0.2"
+		"hono": "^3.0.2",
+		"simple-runtypes": "^7.1.3"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20230228.0",

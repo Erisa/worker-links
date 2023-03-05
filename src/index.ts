@@ -1,4 +1,5 @@
 import { Context, Hono } from 'hono'
+import * as st from 'simple-runtypes'
 
 type Variables = {
 	path: string
@@ -12,9 +13,23 @@ type Bindings = {
 	kv: KVNamespace
 }
 
-type BulkUpload = {
-	[id: string]: string
-}
+const url = st.runtype((v) => {
+	const stringCheck = st.use(st.string(), v)
+	if (!stringCheck.ok) return stringCheck.error
+
+	try {
+		new URL(stringCheck.result)
+		return stringCheck.result
+	} catch {
+		return st.createError('Must be a valid URL')
+	}
+})
+
+const bulkValidator = st.dictionary(
+	// Starting `/` and no ending `/`
+	st.string({ match: /^\/.*?[^\/]$/ }),
+	url,
+)
 
 const app = new Hono<{ Variables: Variables; Bindings: Bindings }>()
 
@@ -112,26 +127,18 @@ app.put('*', createLink)
 
 // add random key
 app.post('/', async (c) => {
-	const body = await c.req.text()
+	const rawBody = await c.req.text()
 
-	if (!body) {
+	if (!rawBody) {
 		c.set('key', '/' + Math.random().toString(36).slice(5))
 		c.set('shortUrl', new URL(c.get('key'), c.req.url).toString())
 		return await createLink(c)
 	} else {
-		// bulk upload from body
+		// Bulk upload from body
 
-		// REMOVE THIS when bulk upload has been migrated
-
-		return c.json({
-			code: '501 Not Implemented',
-			message: 'Bulk upload has not been reimplemented yet.',
-		})
-
-		// what type should this be???
-		let json: any
+		let json: unknown
 		try {
-			json = JSON.parse(body)
+			json = JSON.parse(rawBody)
 		} catch {
 			return c.json(
 				{
@@ -142,9 +149,8 @@ app.post('/', async (c) => {
 			)
 		}
 
-		// change this
-		const valid = true //validateBulkBody(json);
-		if (!valid) {
+		const result = st.use(bulkValidator, json)
+		if (!result.ok) {
 			return c.json(
 				{
 					code: '400 Bad Request',
@@ -158,14 +164,14 @@ app.post('/', async (c) => {
 			)
 		}
 
-		for (const [key, url] of json.entries) {
+		for (const [key, url] of Object.entries(result.result)) {
 			await c.env.KV.put(key, url)
 		}
 
 		return Response.json(
 			{
 				message: 'URLs created successfully',
-				entries: Object.entries(json).map(([key, longurl]) => ({
+				entries: Object.entries(result.result).map(([key, longurl]) => ({
 					key: key.slice(1),
 					shorturl: new URL(key, c.req.url),
 					longurl,
