@@ -261,16 +261,4 @@ function validateUrl(url: string) {
 	return true
 }
 
-// zod and other validation libs too
-// function validateBulkBody(body: Record<string, string>) {
-//   // Starting `/` and no ending `/`
-//   const keyRe = /^\/.*?[^\/]$/;
-
-//   if (!body || typeof body !== "object" || Array.isArray(body)) return false;
-//   return true;
-//   return body.map(
-//     ([key, url]) => keyRe.test(key) && validateUrl(url)
-//   );
-// }
-
 export default app
