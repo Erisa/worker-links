@@ -102,10 +102,33 @@ erisa@Tuturu:~$ curl -X POST -H "Authorization: mysecret" https://erisa.link/ \
 }
 ```
 
-It is a planned feature to be able to list all URLs via a `GET` on `/` with `Authorization`.
+You can list all URLs by sending a `GET` to `/` (with the `Authorization` header set to your secret, of course).
 
-For the time being you can view them from your Cloudflare Dashboard:
-Cloudflare Dashboard -> Workers -> KV -> View on the namespace.
+```json
+kot@Starry:~$ curl -H "Authorization: mysecret" "https://erisa.link/?prefix=%2F&limit=1"
+{
+    "list_complete": false,
+    "cursor": "AAAAAJhOXekucRAqut7Xs7Q2f09GCZyStWBfONvq6u5JP05Bg-z5FM5gf7krRaDrsvyxqfDuvFWUHIZp2n9OZ7Au92h-x68xwg8-bwerIoPd7fesG5w-ZB6f6oXopZHNXDCscmVUQ0OIaDEOx_6pruyEcCKfD3WpOstj6lO_sYJG_zQKdBgmYvLoMFQpK-cK7t8mCLWQA2t351xc9sJ08SM0JniY73t7bOdSxF3ADVTV6ihMSti0Z6svhpknfCn9VHjT",
+    "links": [
+        {
+            "key": "/0031qr7q7"
+        },
+        {
+            "key": "/00ybqita"
+        },
+        {
+            "key": "/02ji9wlg"
+        }
+    ]
+}
+```
+
+The endpoint is paginated by default (1000/page). Just send `cursor` in the query string to access the next page.
+
+You can set `limit` in the query string to `0` to retrieve all URLs.
+
+You can also view URLs from your Cloudflare Dashboard:
+`Cloudflare Dashboard -> Workers -> KV -> View` on the namespace.
 
 ## Plausible Analytics
 
