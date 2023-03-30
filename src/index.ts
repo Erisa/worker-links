@@ -1,4 +1,4 @@
-import { Context, Hono } from 'hono'
+import { Context as HonoContext, Env as HonoEnv, Hono } from 'hono'
 import * as st from 'simple-runtypes'
 
 type Variables = {
@@ -9,6 +9,7 @@ type Variables = {
 
 type Bindings = {
 	WORKERLINKS_SECRET: string
+	PLAUSIBLE_HOST?: string
 	KV: KVNamespace
 	kv: KVNamespace
 }
@@ -31,7 +32,18 @@ const bulkValidator = st.dictionary(
 	url,
 )
 
-const app = new Hono<{ Variables: Variables; Bindings: Bindings }>()
+const checkAuth = (c: Context) =>
+	c.req.headers.get('Authorization') === c.env.WORKERLINKS_SECRET
+
+const unauthorized = (c: Context) =>
+	c.json({ code: '401 Unauthorized', message: 'Unauthorized' }, 401)
+
+type Env = {
+	Bindings: Bindings
+	Variables: Variables
+}
+type Context = HonoContext<Env>
+const app = new Hono<Env>()
 
 // store the path, key and short url for reference in requeests
 // e.g. c.get('key')
@@ -57,18 +69,46 @@ app.use('*', async (c, next) => {
 
 // handle auth
 app.use('*', async (c, next) => {
+	c.res.headers.set('Vary', 'Authorization')
+
 	if (c.env.WORKERLINKS_SECRET === undefined) {
 		return c.text('Secret is not defined. Please add WORKERLINKS_SECRET.')
 	}
 
-	if (
-		!['GET', 'HEAD'].includes(c.req.method) &&
-		c.req.headers.get('Authorization') !== c.env.WORKERLINKS_SECRET
-	) {
-		return c.json({ code: '401 Unauthorized', message: 'Unauthorized' }, 401)
+	if (!['GET', 'HEAD'].includes(c.req.method) && !checkAuth(c)) {
+		return unauthorized(c)
 	}
 
 	await next()
+})
+
+// retrieve list of keys
+app.get('/', async (c) => {
+	if (c.req.header('Authorization')) {
+		if (!checkAuth(c)) {
+			return unauthorized(c)
+		}
+
+		let { prefix, cursor, limit: limitStr } = c.req.query()
+		prefix = prefix ? decodeURIComponent(prefix) : ''
+		cursor = cursor ? decodeURIComponent(cursor) : ''
+		let limit = limitStr ? parseInt(decodeURIComponent(limitStr)) : 1000
+
+		let { keys, ...list } = await c.env.KV.list({
+			limit,
+			prefix,
+			cursor,
+		})
+
+		return c.json({
+			...list,
+			links: keys.map((key) => ({
+				key: key.name,
+			})),
+		})
+	} else {
+		return handleGetHead(c)
+	}
 })
 
 // retrieve key
@@ -84,7 +124,7 @@ async function handleGetHead(c: Context) {
 
 	if (urlResult == null) {
 		return c.json(
-			{ code: '404 Not Found', message: ' Key does not exist.' },
+			{ code: '404 Not Found', message: 'Key does not exist.' },
 			404,
 		)
 	} else {
@@ -108,7 +148,7 @@ app.delete('*', async (c) => {
 
 	if (urlResult == null) {
 		return c.json(
-			{ code: '404 Not Found', message: ' Key does not exist.' },
+			{ code: '404 Not Found', message: 'Key does not exist.' },
 			404,
 		)
 	} else {
