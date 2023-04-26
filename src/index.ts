@@ -50,7 +50,7 @@ const app = new Hono<Env>()
 app.use('*', async (c, next) => {
 	const path = new URL(c.req.url).pathname
 	let key = path !== '/' ? path.replace(/\/$/, '') : path
-	let shortUrl = new URL(key, c.req.url).origin
+	let shortUrl = new URL(key, c.req.url).toString()
 
 	c.set('path', path)
 	c.set('key', key)
