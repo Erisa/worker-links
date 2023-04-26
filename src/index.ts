@@ -90,13 +90,13 @@ app.get('/', async (c) => {
 		}
 
 		let { prefix, cursor, limit: limitStr } = c.req.query()
-		prefix = prefix ? decodeURIComponent(prefix) : ''
+		prefix = prefix ? decodeURIComponent(prefix) : '/'
 		cursor = cursor ? decodeURIComponent(cursor) : ''
 		let limit = limitStr ? parseInt(decodeURIComponent(limitStr)) : 1000
 
 		let { keys, ...list } = await c.env.KV.list({
 			limit,
-			prefix,
+			prefix: prefix.startsWith('/') ? prefix : '/' + prefix,
 			cursor,
 		})
 
