@@ -120,7 +120,7 @@ app.head('*', handleGetHead)
 // handle both GET and HEAD
 async function handleGetHead(c: Context) {
 	// actual logic goes here
-	const urlResult = await c.env.KV.get(c.get('key'), { cacheTtl: 86400 })
+	const urlResult = await c.env.KV.get(c.get('key'))
 
 	if (urlResult == null) {
 		return c.json(
@@ -144,7 +144,7 @@ async function handleGetHead(c: Context) {
 
 // delete specific key
 app.delete('*', async (c) => {
-	const urlResult = await c.env.KV.get(c.get('key'), { cacheTtl: 86400 })
+	const urlResult = await c.env.KV.get(c.get('key'))
 
 	if (urlResult == null) {
 		return c.json(
