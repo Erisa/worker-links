@@ -1,102 +1,8 @@
 import { Context as HonoContext, Env as HonoEnv, Hono } from 'hono'
 import * as st from 'simple-runtypes'
 
-const creationPageHtml = `<head>
-<title>Shorten a URL</title>
-<meta content="width=device-width,initial-scale=1"name="viewport">
-<style>
-body
-{
-  font-family: Arial,sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-form
-{
-  margin: 0 auto;
-  max-width: 480px;
-  padding: 16px;
-}
-
-label
-{
-  display: block;
-  margin-bottom: 8px;
-}
-
-button[type=submit]
-{
-  background-color: green;
-  color: #fff;
-  font-size: 1.5em;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-input
-{
-  width: 75%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  padding: 8px;
-}
-
-input[type=submit]
-{
-  background-color: #4caf50;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 16px;
-  padding: 8px 16px;
-  border-radius: 4px;
-}
-
-input[type=submit]:hover
-{
-  background-color: #3e8e41;
-}
-
-#response
-{
-  margin-top: 16px;
-  font-size: 16px;
-}
-</style>
-</head>
-<body>
-<form id="myForm"onsubmit="submitForm(event)">
-<label for="value">Long URL:</label>
-<input autocomplete="one-time-code"id="value"name="value"placeholder="https://google.com/search?q=how+does+google"><br><br>
-<label for="key">Short Key for URL:</label>
-<input autocomplete="one-time-code"id="key"name="key"placeholder="metagoogle"><br><br>
-<label for="password">Password:</label>
-<input autocomplete="password"id="password"name="password"type="password"placeholder="mysecret"><br><br>
-<button type="submit">Submit</button><br><br>
-<div id="response"></div>
-</form>
-<script>
-function submitForm(event) {
-	event.preventDefault();
-	const key = document.getElementById('key').value;
-	const value = document.getElementById('value').value;
-	const password = document.getElementById('password').value;
-	const xhr = new XMLHttpRequest();
-	xhr.open('PUT', window.location.href+key, true);
-	xhr.setRequestHeader('Url', value);
-	xhr.setRequestHeader('Authorization', password);
-	xhr.responseType = 'json';
-	xhr.onload = function() {
-	  const response = document.getElementById('response');
-	  response.textContent = 'Response: ' + xhr.response.message;
-	};
-	xhr.send();
-}
-</script>`
+// html.d.ts tells typescript that this is a normal thing to do
+import creationPageHtml from './form.html'
 
 type Variables = {
 	path: string
@@ -109,6 +15,7 @@ type Bindings = {
 	PLAUSIBLE_HOST?: string
 	KV: KVNamespace
 	kv: KVNamespace
+	ENABLE_INDEX_FORM: boolean
 }
 
 const url = st.runtype((v) => {
@@ -205,7 +112,7 @@ app.get('/', async (c) => {
 		})
 	} else {
 		const urlResult = await c.env.KV.get(c.get('key'))
-		if (urlResult == null) {
+		if (urlResult == null && c.env.ENABLE_INDEX_FORM) {
 			return c.html(creationPageHtml)
 		}
 		return handleGetHead(c)
