@@ -27,6 +27,12 @@ For debuggging, you can use `yarn dev` (Which runs `wrangler dev --local`). To c
 
 You can also debug on the edge with `wrangler dev`, though you will need to first configure a prepview namespace in `wrangler.toml` and add the `WORKERLINKS_SECRET` secret to the Worker.
 
+## (Optional) User Interface
+
+If `ENABLE_INDEX_FORM` is enabled in `wrangler.toml`, an optional UI form is available when visiting the Worker in a browser, allowing easy creation of links:
+
+![](https://up.erisa.uk/firefox_qFWwv7NIqf.png)
+
 ## Usage
 
 Once deployed, interacting with the API should be rather simple. It's based on headers, specifically with the `Authorization` and `URL` headers.

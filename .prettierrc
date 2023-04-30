@@ -3,5 +3,13 @@
   "semi": false,
   "trailingComma": "all",
   "useTabs": true,
-  "printWidth": 80
+  "printWidth": 80,
+  "overrides": [
+    {
+      "files": "src/*.html", 
+      "options": {
+        "printWidth": 140
+      }
+    }
+  ]
 }
