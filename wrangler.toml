@@ -16,4 +16,4 @@ workers_dev = false
 route = { pattern = "erisa.link/*", zone_name = "erisa.link" }
 
 [vars]
-ENABLE_INDEX_FORM = true
+ENABLE_INDEX_FORM = false
