@@ -1,6 +1,9 @@
 import { Context as HonoContext, Env as HonoEnv, Hono } from 'hono'
 import * as st from 'simple-runtypes'
 
+// html.d.ts tells typescript that this is a normal thing to do
+import creationPageHtml from './form.html'
+
 type Variables = {
 	path: string
 	key: string
@@ -12,6 +15,7 @@ type Bindings = {
 	PLAUSIBLE_HOST?: string
 	KV: KVNamespace
 	kv: KVNamespace
+	ENABLE_INDEX_FORM: boolean
 }
 
 const url = st.runtype((v) => {
@@ -107,6 +111,10 @@ app.get('/', async (c) => {
 			})),
 		})
 	} else {
+		const urlResult = await c.env.KV.get(c.get('key'))
+		if (urlResult == null && c.env.ENABLE_INDEX_FORM) {
+			return c.html(creationPageHtml)
+		}
 		return handleGetHead(c)
 	}
 })
