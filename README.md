@@ -15,6 +15,7 @@ Simple steps:
 
 - `yarn install`
 - `yarn addsecret`
+- `yarn createkv` (follow `wrangler.toml` instructions)
 - `yarn deploy`
 
 ## Deploy (More involved)

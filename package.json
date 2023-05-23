@@ -9,6 +9,7 @@
 		"deploy": "wrangler publish",
 		"dev": "wrangler dev",
 		"addsecret": "wrangler secret put WORKERLINKS_SECRET",
+		"createkv": "wrangler kv:namespace create KV && echo '^^^ Replace the binding on line 12 of wrangler.toml with this' ^^^",
 		"build": "wrangler publish --dry-run --outdir=./dist"
 	},
 	"dependencies": {
