@@ -122,9 +122,6 @@ app.get('/', async (c) => {
 // retrieve key
 app.get('*', handleGetHead)
 
-// same but for HEAD
-app.head('*', handleGetHead)
-
 // handle both GET and HEAD
 async function handleGetHead(c: Context) {
 	// actual logic goes here
@@ -297,16 +294,7 @@ async function sendToPlausible(c: Context) {
 }
 
 function validateUrl(url: string) {
-	// quick and dirty validation
-	if (url == '') {
-		return false
-	}
-	try {
-		new URL(url)
-	} catch (TypeError) {
-		return false
-	}
-	return true
+	return URL.canParse(url)
 }
 
 export default app

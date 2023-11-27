@@ -13,7 +13,7 @@ kv_namespaces = [
   ]
 
 compatibility_flags = []
-compatibility_date = "2023-03-05"
+compatibility_date = "2023-03-01"
 
 # Remove or comment out the route line if using workers_dev (and set below to true)
 workers_dev = false
