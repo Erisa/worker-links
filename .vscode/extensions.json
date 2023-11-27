@@ -1,3 +1,5 @@
 {
-	"recommendations": ["bungcip.better-toml"]
+	"recommendations": [
+		"tamasfe.even-better-toml"
+	]
 }
