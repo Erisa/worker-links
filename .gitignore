@@ -10,3 +10,5 @@ node_modules/
 .cargo-ok
 wrangler.prod.toml
 .mf
+.wrangler/
+.idea/

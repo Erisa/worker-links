@@ -493,10 +493,10 @@ glob-parent@~5.1.2:
   dependencies:
     is-glob "^4.0.1"
 
-hono@^3.2.1:
-  version "3.10.2"
-  resolved "https://registry.yarnpkg.com/hono/-/hono-3.10.2.tgz#fdbd9e0ed47ca9e078740a69e5177259cbe4dd37"
-  integrity sha512-QwJLjWs3e+nZ3b5nQrrdJpYCJqiTK744jeYhX7yhZdxwcQ3KIohBfzI2dA8gSF6HEZkmFUdiKL1BelJ8utIm4w==
+hono@^3.11.8:
+  version "3.11.8"
+  resolved "https://registry.yarnpkg.com/hono/-/hono-3.11.8.tgz#063bef4c34a710bd39472f9d43b4d05c75f4b05a"
+  integrity sha512-s+7FDN0CS0lAvooyj4oQw0PyEec7I+YuVg40gtFHuUrfHBEhKITrLu4dskTdeYn0Xvhbz7s4yRJebJx6gCN/5Q==
 
 html-rewriter-wasm@^0.4.1:
   version "0.4.1"
@@ -835,10 +835,10 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-wrangler@^2.20.1:
-  version "2.20.1"
-  resolved "https://registry.yarnpkg.com/wrangler/-/wrangler-2.20.1.tgz#0b301fe41914b23f3d58edd0e2032d60b0da76b0"
-  integrity sha512-5fl7xF7OkRHim0B0kVXtmSPMrRhRKZ3rqAdn9tKYgi6MnZOvWC+HesGKpNxpVUWsJYpPfJ5AU6gZ6gEL1OLmFQ==
+wrangler@2.20.2:
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/wrangler/-/wrangler-2.20.2.tgz#9249a73fa3c2a419c76852e3f9265d641e17dbb0"
+  integrity sha512-ZWydYGuKbHC8PdKLk7JAdRYMK78mHVnmaFsLRf2ZpnmVl2nQl9lKIXKKGVUdmezj70FvLhJCD/2LsGOPGg2AFg==
   dependencies:
     "@cloudflare/kv-asset-handler" "^0.2.0"
     "@esbuild-plugins/node-globals-polyfill" "^0.1.1"
