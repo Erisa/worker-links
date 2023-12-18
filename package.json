@@ -1,6 +1,6 @@
 {
 	"name": "worker-links",
-	"version": "2.1.1",
+	"version": "2.1.2",
 	"description": "Simple link shortener for Cloudflare Workers.",
 	"author": "Erisa A",
 	"license": "MIT",
