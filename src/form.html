@@ -75,32 +75,44 @@
 		<span id="url"></span><a id="urlLink"></a>
 	</form>
 	<script>
-		function submitForm(event) {
+		function updateUI(data) {
+			const responseElement = document.getElementById('response')
+			responseElement.textContent = 'Response: ' + data.message
+
+			const urlText = document.getElementById('url')
+			const urlLink = document.getElementById('urlLink')
+
+			urlText.textContent = data.shorturl ? 'URL: ' : ''
+			urlLink.textContent = data.shorturl || ''
+			urlLink.href = data.shorturl || ''
+		}
+
+		async function submitForm(event) {
 			event.preventDefault()
+
 			const key = document.getElementById('key').value
 			const value = document.getElementById('value').value
 			const password = document.getElementById('password').value
-			const xhr = new XMLHttpRequest()
-			xhr.open(key === '' ? 'POST' : 'PUT', window.location.href + key, true)
-			xhr.setRequestHeader('Url', value)
-			xhr.setRequestHeader('Authorization', password)
-			xhr.responseType = 'json'
-			xhr.onload = function () {
-				const response = document.getElementById('response')
-				response.textContent = 'Response: ' + xhr.response.message
-				const urlText = document.getElementById('url')
-				const urlLink = document.getElementById('urlLink')
-				if (xhr.response.shorturl) {
-					urlText.textContent = 'URL: '
-					urlLink.textContent = xhr.response.shorturl
-					urlLink.href = xhr.response.shorturl
-				} else {
-					urlText.textContent = ''
-					urlLink.textContent = ''
-					urlLink.href = ''
-				}
+
+			const url = key === '' ? window.location.href : window.location.href + key
+			const method = key === '' ? 'POST' : 'PUT'
+
+			try {
+				const response = await fetch(url, {
+					method,
+					headers: {
+						'Content-Type': 'application/json',
+						URL: value,
+						Authorization: password,
+					},
+				})
+
+				const responseData = await response.json()
+
+				updateUI(responseData)
+			} catch (error) {
+				console.error('Error:', error)
 			}
-			xhr.send()
 		}
 	</script>
 </body>
