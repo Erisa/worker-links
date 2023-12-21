@@ -137,6 +137,31 @@ You can set `limit` in the query string to `0` to retrieve all URLs.
 You can also view URLs from your Cloudflare Dashboard:
 `Cloudflare Dashboard -> Workers -> KV -> View` on the namespace.
 
+## ShareX
+
+To use worker-links as a URL Shortener in ShareX, create a file with a `.sxcu` extension (ex. `worker-links.sxcu`) and copy-paste the following:
+
+```json
+{
+  "Version": "15.0.0",
+  "Name": "worker-links",
+  "DestinationType": "URLShortener",
+  "RequestMethod": "POST",
+  "RequestURL": "https://erisa.link",
+  "Headers": {
+    "Authorization": "mysecret",
+    "URL": "{input}"
+  },
+  "Body": "JSON",
+  "URL": "{json:shorturl}"
+}
+```
+
+Replace `RequestURL` with the URL of your choice and `Authorization` with your worker link's secret.
+
+Now open the `.sxcu` file. It should make worker-links as your active custom URL Shortener.  
+If not, click on **Destinations** -> **URL Shortener** and choose **Custom URL Shortener**.
+
 ## Plausible Analytics
 
 To get statistics for your short URLs with Plausible Analytics, define a `PLAUSIBLE_HOST` secret set to the URL of your Plausible instance. For example, `https://plausible.io/`.
