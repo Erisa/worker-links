@@ -1,19 +1,55 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <head>
 	<title>Shorten a URL</title>
 	<meta content="width=device-width,initial-scale=1" name="viewport" />
+	<link rel="shortcut icon" href="https://em-content.zobj.net/source/microsoft/378/link_1f517.png" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+
 	<style>
+		:root {
+			--font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+				'Segoe UI Emoji';
+
+			--ctp-bg: #eff1f5;
+			--ctp-crust: #dce0e8;
+			--ctp-text: #4c4f69;
+			--ctp-accent: #04a5e5;
+
+			--ctp-dark-bg: #1e1e2e;
+			--ctp-dark-crust: #181825;
+			--ctp-dark-text: #cdd6f4;
+			--ctp-dark-accent: #f5c2e7;
+		}
+
 		body {
-			font-family: Arial, sans-serif;
+			background-color: var(--ctp-bg);
+			color: var(--ctp-text);
+			font-family: var(--font-family);
 			margin: 0;
 			padding: 0;
 		}
 
-		form {
+		a {
+			color: var(--ctp-accent);
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration-line: underline;
+		}
+
+		.container {
 			margin: 0 auto;
 			max-width: 480px;
 			padding: 16px;
+		}
+
+		.separator {
+			border: 1px solid var(--ctp-accent);
 		}
 
 		label {
@@ -22,85 +58,150 @@
 		}
 
 		button[type='submit'] {
-			background-color: green;
-			color: #fff;
-			font-size: 1.5em;
-			padding: 10px 20px;
+			margin-top: 10px;
+			background-color: var(--ctp-accent);
+			font-size: 1.2em;
+			padding: 5px 10px;
 			border: none;
 			border-radius: 5px;
 			cursor: pointer;
 		}
 
+		a,
+		button[type='submit'] {
+			transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform,
+				filter, backdrop-filter;
+			transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+			transition-duration: 150ms;
+		}
+
+		a:hover,
+		button[type='submit']:hover {
+			opacity: 50%;
+		}
+
 		input {
-			width: 75%;
-			border: 1px solid #ccc;
+			width: 96%;
+			border: 1px solid var(--ctp-accent);
+			background-color: var(--ctp-crust);
 			border-radius: 4px;
 			font-size: 16px;
 			padding: 8px;
+			margin-bottom: 10px;
 		}
 
-		input[type='submit'] {
-			background-color: #4caf50;
-			border: none;
-			color: #fff;
-			cursor: pointer;
-			font-size: 16px;
+		.response-items {
 			margin-top: 16px;
-			padding: 8px 16px;
-			border-radius: 4px;
-		}
-
-		input[type='submit']:hover {
-			background-color: #3e8e41;
+			margin-bottom: 16px;
 		}
 
 		#response {
-			margin-top: 16px;
 			font-size: 16px;
+		}
+
+		.bold {
+			font-weight: bolder;
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body {
+				background-color: var(--ctp-dark-bg);
+				color: var(--ctp-dark-text);
+			}
+
+			a {
+				color: var(--ctp-dark-accent);
+			}
+
+			.separator {
+				border: 1px solid var(--ctp-dark-accent);
+			}
+
+			button[type='submit'] {
+				background-color: var(--ctp-dark-accent);
+			}
+
+			input {
+				border: 1px solid var(--ctp-dark-accent);
+				background-color: var(--ctp-dark-crust);
+				color: var(--ctp-dark-text);
+			}
 		}
 	</style>
 </head>
 
 <body>
-	<form id="myForm" onsubmit="submitForm(event)">
-		<label for="value">Long URL:</label>
-		<input autocomplete="one-time-code" id="value" name="value" placeholder="https://google.com/search?q=how+does+google" /><br /><br />
-		<label for="key">Short Key for URL: (optional)</label>
-		<input autocomplete="one-time-code" id="key" name="key" placeholder="metagoogle" /><br /><br />
-		<label for="password">Password:</label>
-		<input autocomplete="password" id="password" name="password" type="password" placeholder="mysecret" /><br /><br />
-		<button type="submit">Submit</button><br /><br />
-		<div id="response"></div>
-		<br />
-		<span id="url"></span><a id="urlLink"></a>
-	</form>
+	<div class="container">
+		<h2>Shorten a URL ✨</h2>
+
+		<form id="myForm" onsubmit="submitForm(event)">
+			<label for="value">URL to shorten:</label>
+			<input autocomplete="one-time-code" id="value" name="value" placeholder="https://google.com/search?q=how+does+google" />
+
+			<label for="key">Unique key: (optional)</label>
+			<input autocomplete="one-time-code" id="key" name="key" placeholder="metagoogle" />
+
+			<label for="password">Authentication:</label>
+			<input autocomplete="password" id="password" name="password" type="password" placeholder="mysecret" />
+
+			<button type="submit">Submit</button>
+
+			<div class="response-items">
+				<div id="response"></div>
+				<span id="url"></span>
+				<a id="urlLink"></a>
+			</div>
+		</form>
+
+		<div class="separator"></div>
+
+		<footer>
+			<p>
+				<span class="bold">worker-links</span> by <a href="https://erisa.uk">Erisa A</a>. Licensed under
+				<a href="https://github.com/Erisa/worker-links/blob/main/LICENSE">MIT</a>.
+			</p>
+		</footer>
+	</div>
+
 	<script>
-		function submitForm(event) {
+		function updateUI(data) {
+			const responseElement = document.getElementById('response')
+			responseElement.textContent = 'Response: ' + data.message
+
+			const urlText = document.getElementById('url')
+			const urlLink = document.getElementById('urlLink')
+
+			urlText.textContent = data.shorturl ? 'URL: ' : ''
+			urlLink.textContent = data.shorturl || ''
+			urlLink.href = data.shorturl || ''
+		}
+
+		async function submitForm(event) {
 			event.preventDefault()
+
 			const key = document.getElementById('key').value
 			const value = document.getElementById('value').value
 			const password = document.getElementById('password').value
-			const xhr = new XMLHttpRequest()
-			xhr.open(key === '' ? 'POST' : 'PUT', window.location.href + key, true)
-			xhr.setRequestHeader('Url', value)
-			xhr.setRequestHeader('Authorization', password)
-			xhr.responseType = 'json'
-			xhr.onload = function () {
-				const response = document.getElementById('response')
-				response.textContent = 'Response: ' + xhr.response.message
-				const urlText = document.getElementById('url')
-				const urlLink = document.getElementById('urlLink')
-				if (xhr.response.shorturl) {
-					urlText.textContent = 'URL: '
-					urlLink.textContent = xhr.response.shorturl
-					urlLink.href = xhr.response.shorturl
-				} else {
-					urlText.textContent = ''
-					urlLink.textContent = ''
-					urlLink.href = ''
-				}
+
+			const url = key === '' ? window.location.href : window.location.href + key
+			const method = key === '' ? 'POST' : 'PUT'
+
+			try {
+				const response = await fetch(url, {
+					method,
+					headers: {
+						'Content-Type': 'application/json',
+						URL: value,
+						Authorization: password,
+					},
+				})
+
+				const responseData = await response.json()
+
+				updateUI(responseData)
+			} catch (error) {
+				console.error('Error:', error)
 			}
-			xhr.send()
 		}
 	</script>
 </body>
