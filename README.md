@@ -32,7 +32,7 @@ You can also debug on the edge with `wrangler dev`, though you will need to firs
 
 If `ENABLE_INDEX_FORM` is enabled in `wrangler.toml`, an optional UI form is available when visiting the Worker in a browser, allowing easy creation of links:
 
-![](https://up.erisa.uk/firefox_qFWwv7NIqf.png)
+![](https://i.imgur.com/Xrgj6X6.png)
 
 ## Usage
 
