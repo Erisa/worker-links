@@ -6,11 +6,11 @@
 	"license": "MIT",
 	"scripts": {
 		"format": "prettier --write '**/*.{ts,js,css,json,md,html}'",
-		"deploy": "wrangler publish",
+		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"addsecret": "wrangler secret put WORKERLINKS_SECRET",
 		"createkv": "wrangler kv:namespace create KV && echo '^^^ Replace the binding on line 12 of wrangler.toml with this' ^^^",
-		"build": "wrangler publish --dry-run --outdir=./dist"
+		"build": "wrangler deploy --dry-run --outdir=./dist"
 	},
 	"dependencies": {
 		"hono": "^3.12.1",

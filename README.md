@@ -8,7 +8,7 @@ It was made for my personal use but is available publicly in the hopes that it m
 
 ## Deploy (simple)
 
-Wrangler 2 is required now, but should be handled automatically for `yarn` commands.  
+Wrangler 3 is required now, but should be handled automatically for `yarn` commands.  
 To run manual wrangler commands, try `npx wrangler`.
 
 Simple steps:
@@ -20,13 +20,13 @@ Simple steps:
 
 ## Deploy (More involved)
 
-To deploy to your Cloudflare Workers account, edit the relevant entries in `wrangler.toml`, add a secret with `wrangler secret put WORKERLINKS_SECRET` and use `wrangler publish`.
+To deploy to your Cloudflare Workers account, edit the relevant entries in `wrangler.toml`, add a secret with `wrangler secret put WORKERLINKS_SECRET` and use `wrangler deploy`.
 
 ## Debugging
 
-For debuggging, you can use `yarn dev` (Which runs `wrangler dev --local`). To change the secret used in this mode, edit the `.dev.vars` file.
+For debuggging, you can use `yarn dev` (Which runs `wrangler dev`). 
 
-You can also debug on the edge with `wrangler dev`, though you will need to first configure a prepview namespace in `wrangler.toml` and add the `WORKERLINKS_SECRET` secret to the Worker.
+To change the secret used in this mode, edit the `.dev.vars` file.
 
 ## (Optional) User Interface
 
