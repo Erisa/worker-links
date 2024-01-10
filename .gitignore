@@ -12,3 +12,4 @@ wrangler.prod.toml
 .mf
 .wrangler/
 .idea/
+.yarn/install-state.gz

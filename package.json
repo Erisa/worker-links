@@ -12,6 +12,7 @@
 		"createkv": "wrangler kv:namespace create KV && echo '^^^ Replace the binding on line 12 of wrangler.toml with this' ^^^",
 		"build": "wrangler deploy --dry-run --outdir=./dist"
 	},
+	"packageManager": "yarn@4.0.2",
 	"dependencies": {
 		"hono": "^3.12.1",
 		"simple-runtypes": "^7.1.3"
