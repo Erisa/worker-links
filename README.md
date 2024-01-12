@@ -8,15 +8,15 @@ It was made for my personal use but is available publicly in the hopes that it m
 
 ## Deploy (simple)
 
-Wrangler 2 is required now, but should be handled automatically for `yarn` commands.  
+Wrangler 2 is required now, but should be handled automatically for `npm run` commands.  
 To run manual wrangler commands, try `npx wrangler`.
 
 Simple steps:
 
-- `yarn install`
-- `yarn addsecret`
-- `yarn createkv` (follow `wrangler.toml` instructions)
-- `yarn deploy`
+- `npm install`
+- `npm run addsecret`
+- `npm run createkv` (follow `wrangler.toml` instructions)
+- `npm run deploy`
 
 ## Deploy (More involved)
 
@@ -24,7 +24,7 @@ To deploy to your Cloudflare Workers account, edit the relevant entries in `wran
 
 ## Debugging
 
-For debuggging, you can use `yarn dev` (Which runs `wrangler dev --local`). To change the secret used in this mode, edit the `.dev.vars` file.
+For debuggging, you can use `npm run dev` (Which runs `wrangler dev --local`). To change the secret used in this mode, edit the `.dev.vars` file.
 
 You can also debug on the edge with `wrangler dev`, though you will need to first configure a prepview namespace in `wrangler.toml` and add the `WORKERLINKS_SECRET` secret to the Worker.
 
@@ -32,7 +32,7 @@ You can also debug on the edge with `wrangler dev`, though you will need to firs
 
 If `ENABLE_INDEX_FORM` is enabled in `wrangler.toml`, an optional UI form is available when visiting the Worker in a browser, allowing easy creation of links:
 
-![](https://up.erisa.uk/firefox_qFWwv7NIqf.png)
+![](https://up.erisa.uk/firefox_HuMh2bZSU9.png)
 
 ## Usage
 
