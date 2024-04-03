@@ -184,7 +184,7 @@
 			const password = document.getElementById('password').value
 
 			const baseUrlPath = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/'
-			const url = key === '' ? baseUrlPath : baseUrlPath + key
+			const url = key === '' ? window.location.href : baseUrlPath + key
 			const method = key === '' ? 'POST' : 'PUT'
 
 			try {
