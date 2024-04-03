@@ -4,6 +4,8 @@ import * as st from 'simple-runtypes'
 // html.d.ts tells typescript that this is a normal thing to do
 import creationPageHtml from './form.html'
 
+const ADMIN_PATH = '/'
+
 type Variables = {
 	path: string
 	key: string
@@ -87,7 +89,7 @@ app.use('*', async (c, next) => {
 })
 
 // retrieve list of keys
-app.get('/', async (c) => {
+app.get(ADMIN_PATH, async (c) => {
 	if (c.req.header('Authorization')) {
 		if (!checkAuth(c)) {
 			return unauthorized(c)
@@ -171,7 +173,7 @@ app.delete('*', async (c) => {
 app.put('*', createLink)
 
 // add random key
-app.post('/', async (c) => {
+app.post(ADMIN_PATH, async (c) => {
 	const rawBody = await c.req.text()
 
 	if (!rawBody) {
