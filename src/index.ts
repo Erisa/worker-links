@@ -4,7 +4,7 @@ import * as st from 'simple-runtypes'
 // html.d.ts tells typescript that this is a normal thing to do
 import creationPageHtml from './form.html'
 
-const ADMIN_PATH = "/"
+const ADMIN_PATH = '/'
 
 type Variables = {
 	path: string
