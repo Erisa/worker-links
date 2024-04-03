@@ -39,7 +39,7 @@ const bulkValidator = st.dictionary(
 )
 
 const checkAuth = (c: Context) =>
-	c.req.headers.get('Authorization') === c.env.WORKERLINKS_SECRET
+	c.req.header('Authorization') === c.env.WORKERLINKS_SECRET
 
 const unauthorized = (c: Context) =>
 	c.json({ code: '401 Unauthorized', message: 'Unauthorized' }, 401)
@@ -230,7 +230,7 @@ app.post(ADMIN_PATH, async (c) => {
 })
 
 async function createLink(c: Context) {
-	const url = c.req.headers.get('URL')
+	const url = c.req.header('URL')
 
 	if (url == null || !validateUrl(url)) {
 		return c.json(
@@ -282,15 +282,15 @@ app.all('*', (c) =>
 async function sendToPlausible(c: Context) {
 	const url = c.env.PLAUSIBLE_HOST + 'api/event'
 	const headers = new Headers()
-	headers.append('User-Agent', c.req.headers.get('User-Agent') || '')
-	headers.append('X-Forwarded-For', c.req.headers.get('X-Forwarded-For') || '')
+	headers.append('User-Agent', c.req.header('User-Agent') || '')
+	headers.append('X-Forwarded-For', c.req.header('X-Forwarded-For') || '')
 	headers.append('Content-Type', 'application/json')
 
 	const data = {
 		name: 'pageview',
 		url: c.req.url,
 		domain: new URL(c.req.url).hostname,
-		referrer: c.req.referrer,
+		referrer: c.req.header('referer'),
 	}
 	await fetch(url, { method: 'POST', headers, body: JSON.stringify(data) })
 }
