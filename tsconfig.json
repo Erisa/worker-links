@@ -1,8 +1,8 @@
 {
 	"compilerOptions": {
 		"target": "ESNext",
-		"module": "ESNext",
-		"moduleResolution": "node",
+		"module": "Node16",
+		"moduleResolution": "node16",
 		"esModuleInterop": true,
 		"strict": true,
 		"lib": ["esnext"],

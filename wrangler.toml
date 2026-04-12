@@ -7,7 +7,7 @@ main = "src/index.ts"
 # Change these!!
 kv_namespaces = [
   
-  # Replace below line with your namespace ID ('yarn createkv' output) 
+  # Replace below line with your namespace ID ('npm run createkv' output) 
   { binding = "KV", id = "1be44406edc142a084435e24dbf8ae1d", preview_id = "15cfb90ecd654b8f8a9ccd600832093f" }
 
   ]

@@ -143,17 +143,17 @@ To use worker-links as a URL Shortener in ShareX, create a file with a `.sxcu` e
 
 ```json
 {
-  "Version": "15.0.0",
-  "Name": "worker-links",
-  "DestinationType": "URLShortener",
-  "RequestMethod": "POST",
-  "RequestURL": "https://erisa.link",
-  "Headers": {
-    "Authorization": "mysecret",
-    "URL": "{input}"
-  },
-  "Body": "JSON",
-  "URL": "{json:shorturl}"
+	"Version": "15.0.0",
+	"Name": "worker-links",
+	"DestinationType": "URLShortener",
+	"RequestMethod": "POST",
+	"RequestURL": "https://erisa.link",
+	"Headers": {
+		"Authorization": "mysecret",
+		"URL": "{input}"
+	},
+	"Body": "JSON",
+	"URL": "{json:shorturl}"
 }
 ```
 
