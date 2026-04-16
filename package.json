@@ -17,7 +17,7 @@
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20260412.1",
-		"hono": "^4.12.12",
+		"hono": "^4.12.14",
 		"prettier": "^3.8.2",
 		"wrangler": "^4.81.1"
 	}
