@@ -19,6 +19,6 @@
 		"@cloudflare/workers-types": "^4.20260412.1",
 		"hono": "^4.12.34",
 		"prettier": "^3.8.2",
-		"wrangler": "^4.81.1"
+		"wrangler": "^4.114.0"
 	}
 }
